@@ -12,14 +12,14 @@
     <div class="row my-3">
       <div class="col-4 d-flex align-items-center py-2">
         <small class="mr-2 text-primary1">Prefijo</small>
-        <vs-switch v-model="enabledPrefix">
+        <vs-switch v-model="enabledPrefixComponent">
           <template #off> Desactivado </template>
           <template #on> Activado </template>
         </vs-switch>
       </div>
       <div class="col-8">
         <vs-input
-          v-if="enabledPrefix"
+          v-if="enabledPrefixComponent"
           v-model="prefixComponent"
           type="text"
           name="user"
@@ -61,16 +61,17 @@ export default {
   name: "Index",
   components: {},
   computed: {
-    ...mapState("main", ["prefix"]),
+    ...mapState("main", ["prefix", "enabledPrefix"]),
   },
   mounted() {
     this.prefixComponent = this.prefix;
+    this.enabledPrefixComponent = this.enabledPrefix;
   },
   data: () => ({
     payload: "",
     prefixComponent: "",
     result: "",
-    enabledPrefix: false,
+    enabledPrefixComponent: false,
     show: false,
   }),
   watch: {
@@ -81,12 +82,13 @@ export default {
     },
   },
   methods: {
-    ...mapMutations("main", ["SET_PREFIX"]),
+    ...mapMutations("main", ["SET_PREFIX", "ENABLE_PREFIX"]),
     covertPayload() {
-      if (this.enabledPrefix) {
-        this.SET_PREFIX(this.prefix);
+      if (this.enabledPrefixComponent) {
+        this.SET_PREFIX(this.prefixComponent);
+        this.ENABLE_PREFIX(this.enabledPrefixComponent);
       }
-      const input = this.enabledPrefix
+      const input = this.enabledPrefixComponent
         ? `${this.prefixComponent}${this.payload}`
         : this.payload;
       this.result = crypto.createHash("sha512").update(input).digest("base64");
@@ -112,7 +114,7 @@ export default {
         icon: "success",
         title: "Copiado a tu porta papeles",
         text: this.result,
-        timer: 3000,
+        timer: 10000,
       });
     },
   },
