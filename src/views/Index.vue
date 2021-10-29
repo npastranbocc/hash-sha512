@@ -1,5 +1,14 @@
 <template>
-  <div class="container-custom mx-auto h-100 d-flex flex-column justify-content-center">
+  <div
+    class="
+      container-custom
+      mx-auto
+      h-100
+      d-flex
+      flex-column
+      justify-content-center
+    "
+  >
     <div class="row my-3">
       <div class="col-4 d-flex align-items-center py-2">
         <small class="mr-2 text-primary1">Prefijo</small>
@@ -37,7 +46,9 @@
     </div>
 
     <div class="row my-3 d-flex justify-content-center">
-      <vs-button :disabled="!payload" @click="covertPayload">Convertir</vs-button>
+      <vs-button :disabled="!payload" @click="covertPayload"
+        >Convertir</vs-button
+      >
     </div>
   </div>
 </template>
@@ -107,5 +118,3 @@ export default {
   },
 };
 </script>
-
-
